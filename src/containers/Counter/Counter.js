@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { connect } from 'react-redux'
 import CounterControl from '../../components/CounterControl/CounterControl'
 import CounterOutput from '../../components/CounterOutput/CounterOutput'
 
@@ -8,54 +8,47 @@ class Counter extends React.Component {
     counter: 0,
   }
 
-  counterChangedHandler = (action, value) => {
-    switch (action) {
-      case 'inc':
-        this.setState((prevState) => {
-          return { counter: prevState.counter + 1 }
-        })
-        break
-      case 'dec':
-        this.setState((prevState) => {
-          return { counter: prevState.counter - 1 }
-        })
-        break
-      case 'add':
-        this.setState((prevState) => {
-          return { counter: prevState.counter + value }
-        })
-        break
-      case 'sub':
-        this.setState((prevState) => {
-          return { counter: prevState.counter - value }
-        })
-        break
-    }
-  }
+
 
   render() {
     return (
       <div>
-        <CounterOutput value={this.state.counter} />
+        <CounterOutput value={this.props.ctr} />
         <CounterControl
           label="Increase"
-          clicked={() => this.counterChangedHandler('inc')}
+          clicked={this.props.onIncrement}
         />
         <CounterControl
-          label="Decrease"
-          clicked={() => this.counterChangedHandler('dec')}
+          label="Decrement"
+          clicked={this.props.onDecrement}
         />
         <CounterControl
           label="Increase 2"
-          clicked={() => this.counterChangedHandler('add', 2)}
+          clicked={this.props.onAdd}
         />
         <CounterControl
-          label="Decrease 2"
-          clicked={() => this.counterChangedHandler('sub', 2)}
+          label="Decrement 2"
+          clicked={this.props.onSub}
         />
+        
       </div>
     )
   }
 }
 
-export default Counter
+const mapStateToProps = (state) => {
+  return{
+    ctr: state.counter
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    onIncrement: () => dispatch({type: 'INCREMENT'}),
+    onDecrement: () => dispatch({type: 'DECREMENT'}),
+    onAdd: () => dispatch({type: 'ADD', value: 2 }),
+    onSub: () => dispatch({type: 'SUB', value:2 })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter)
