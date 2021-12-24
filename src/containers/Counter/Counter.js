@@ -6,10 +6,7 @@ import CounterOutput from '../../components/CounterOutput/CounterOutput'
 class Counter extends React.Component {
   state = {
     counter: 0,
-  }
-
-
-
+  } 
   render() {
     return (
       <div>
@@ -30,6 +27,12 @@ class Counter extends React.Component {
           label="Decrement 2"
           clicked={this.props.onSub}
         />
+        <div>
+          <button onClick={this.props.onStoreResult}>Show Store</button>
+          {this.props.storeResult.map((item) => {
+            return <p key={item}>{item}</p>
+          })}
+        </div>
         
       </div>
     )
@@ -38,7 +41,8 @@ class Counter extends React.Component {
 
 const mapStateToProps = (state) => {
   return{
-    ctr: state.counter
+    ctr: state.counter,
+    storeResult: state.result
   }
 }
 
@@ -47,7 +51,8 @@ const mapDispatchToProps = (dispatch) => {
     onIncrement: () => dispatch({type: 'INCREMENT'}),
     onDecrement: () => dispatch({type: 'DECREMENT'}),
     onAdd: () => dispatch({type: 'ADD', value: 2 }),
-    onSub: () => dispatch({type: 'SUB', value:2 })
+    onSub: () => dispatch({type: 'SUB', value:2 }),
+    onStoreResult: () => dispatch({type: 'RESULT'})
   }
 }
 

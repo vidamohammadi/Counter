@@ -1,25 +1,36 @@
+import * as actionTypes from './actions'
 const inistialState = {
-    counter : 0
+    counter: 0,
+    result: []
 }
 
-const reducer = (state = inistialState , action) => {
-    switch(action.type){
-        case 'INCREMENT':
-            return{
+const reducer = (state = inistialState, action) => {
+    switch (action.type) {
+        case actionTypes.INCREMENT:
+            return {
+                ...state,
                 counter: state.counter + 1
             }
-        case 'DECREMENT':
-            return{
+        case actionTypes.DECREMENT:
+            return {
+                ...state,
                 counter: state.counter - 1
-        }
-        case 'ADD':
-            return{
+            }
+        case actionTypes.ADD:
+            return {
+                ...state,
                 counter: state.counter + action.value
-        }
-        case 'SUB':
-            return{
+            }
+        case actionTypes.SUB:
+            return {
+                ...state,
                 counter: state.counter - action.value
-        }
+            }
+        case actionTypes.RESULT:
+            return {
+                ...state,
+                result: state.result.concat(state.counter)
+            }
         default:
             return state
     }
