@@ -3,10 +3,7 @@ import { connect } from 'react-redux'
 import CounterControl from '../../components/CounterControl/CounterControl'
 import CounterOutput from '../../components/CounterOutput/CounterOutput'
 
-class Counter extends React.Component {
-  state = {
-    counter: 0,
-  } 
+class Counter extends React.Component { 
   render() {
     return (
       <div>
